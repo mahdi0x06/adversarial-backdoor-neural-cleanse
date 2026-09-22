@@ -98,21 +98,27 @@ class BackdoorTestDataset(Dataset):
         self.trigger = trigger
         self.target_class = target_class
 
+        self.indices = [
+            index
+            for index in range(len(dataset))
+            if _get_label(dataset, index) != target_class
+        ]
 
     def __len__(self):
-        return len(self.dataset)
-
+        return len(self.indices)
 
     def __getitem__(self, index):
 
-        image, _ = self.dataset[index]
+        original_index = self.indices[index]
 
+        image, _ = self.dataset[
+            original_index
+        ]
 
         image = apply_trigger(
             image,
             self.trigger,
         )
-
 
         return (
             image,
