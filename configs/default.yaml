@@ -1,14 +1,21 @@
-seed: 42
+seed: 14
 
 dataset:
   name: cifar10
+  root: data
+  val_size: 5000
+  batch_size: 128
+  num_workers: 2
 
 model:
-  name: resnet
+  name: resnet20
+  num_classes: 10
 
 badnet:
   poison_rate: 0.1
   target_class: 0
+  trigger_size: 4
+  trigger_value: 1.0
 
 adversarial_training:
   attack: pgd

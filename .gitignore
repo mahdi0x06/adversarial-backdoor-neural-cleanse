@@ -16,11 +16,11 @@ env/
 .ipynb_checkpoints/
 
 # Datasets
-data/
-datasets/
+/data/
+/datasets/
 
 # Experiment outputs
-outputs/
+/outputs/
 
 # Model checkpoints
 *.pt
@@ -29,7 +29,7 @@ outputs/
 
 # Logs
 *.log
-logs/
+/logs/
 
 # OS files
 .DS_Store
