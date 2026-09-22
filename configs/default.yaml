@@ -1,0 +1,17 @@
+seed: 42
+
+dataset:
+  name: cifar10
+
+model:
+  name: resnet
+
+badnet:
+  poison_rate: 0.1
+  target_class: 0
+
+adversarial_training:
+  attack: pgd
+
+neural_cleanse:
+  enabled: true
