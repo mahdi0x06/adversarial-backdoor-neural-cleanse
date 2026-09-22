@@ -81,3 +81,59 @@ def evaluate_asr(
         total_success /
         total_samples
     )
+
+import numpy as np
+
+
+def neural_cleanse_anomaly_indices(
+    mask_norms,
+):
+
+    values = np.asarray(
+        list(
+            mask_norms.values()
+        ),
+        dtype=np.float64,
+    )
+
+    median = np.median(
+        values
+    )
+
+    mad = np.median(
+        np.abs(
+            values - median
+        )
+    )
+
+    normalized_mad = (
+        1.4826 * mad
+    )
+
+    denominator = max(
+        normalized_mad,
+        1e-12,
+    )
+
+    scores = {}
+
+
+    for class_id, value in (
+        mask_norms.items()
+    ):
+
+        scores[class_id] = (
+            median - value
+        ) / denominator
+
+
+    return {
+        "median":
+            float(median),
+
+        "mad":
+            float(mad),
+
+        "scores":
+            scores,
+    }
