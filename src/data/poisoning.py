@@ -85,3 +85,36 @@ class PoisonedDataset(Dataset):
             label = self.target_class
 
         return image, label
+
+class BackdoorTestDataset(Dataset):
+
+    def __init__(
+        self,
+        dataset,
+        trigger,
+        target_class,
+    ):
+        self.dataset = dataset
+        self.trigger = trigger
+        self.target_class = target_class
+
+
+    def __len__(self):
+        return len(self.dataset)
+
+
+    def __getitem__(self, index):
+
+        image, _ = self.dataset[index]
+
+
+        image = apply_trigger(
+            image,
+            self.trigger,
+        )
+
+
+        return (
+            image,
+            self.target_class,
+        )
